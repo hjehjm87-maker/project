@@ -18,6 +18,7 @@ AI project 4조
 * **실전형 데이터 정제 방향성 제안:** 맥락 정보 손실 및 노이즈 증폭 원인 분석을 바탕으로, 이미지 품질 향상을 넘어 **실제 주행 환경 특성을 반영한 최적의 데이터 가이드라인**을 도출하고 향후 연구 방향을 제안합니다.
 
 ### 프로젝트 파이프라인 아키텍처
+<img width="509" height="284" alt="image" src="https://github.com/user-attachments/assets/ba63c12d-b3c9-43db-afba-7360ae88c167" />
 
 
 ## 2. 필요한 라이브러리 및 환경
