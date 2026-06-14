@@ -81,6 +81,7 @@ model_base.train(
     imgsz=640, 
     name="yolo11s_baseline"
 )
+'''
 
 * 2차 실험 Model Upgrade (YOLOv11m)
 모델의 백본(Backbone) 네트워크 파라미터 체급을 확장하여, 도로 위험물의 미세 특징 추출 성능을 고도화하고자 Medium 모델로 스케일업 실험을 진행했습니다.
