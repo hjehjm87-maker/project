@@ -81,12 +81,13 @@ model_base.train(
     imgsz=640, 
     name="yolo11s_baseline"
 )
-'''
+```
 
 * 2차 실험 Model Upgrade (YOLOv11m)
 모델의 백본(Backbone) 네트워크 파라미터 체급을 확장하여, 도로 위험물의 미세 특징 추출 성능을 고도화하고자 Medium 모델로 스케일업 실험을 진행했습니다.
 
 # Model Upgrade: YOLOv11m 모델 스케일업 학습
+```python
 model_mid = YOLO("yolo11m.pt")
 model_mid.train(
     data="data.yaml", 
@@ -95,11 +96,12 @@ model_mid.train(
     imgsz=640, 
     name="yolo11m_upgrade"
 )
-
+```
 * 3차 실험: Data Augmentation 적
 차량 주행 중 발생할 수 있는 노면의 물리적 각도 변화 및 기상 조건 변화를 강제로 모사하기 위해, 광학적·기하학적 증강 옵션을 부여하여 모델의 일반화 성능을 유도했습니다.
 
 # Augmentation: 조도 변화 및 흔들림 가혹 환경 모사 학습
+```python
 model_aug = YOLO("yolo11s.pt")
 model_aug.train(
     data="data.yaml", 
@@ -112,11 +114,12 @@ model_aug.train(
     translate=0.2,   # 평행 이동 변형
     name="yolo11s_augmentation"
 )
-
+```
 * 4차 실험: ROI Crop 전처리 처리
 도로 전경 이미지에서 하늘, 가로수, 건물 등 탐지와 무관한 불필요한 상단 배경을 파이썬 스크립트로 필터링하고, 실제 결함이 존재하는 노면(Region of Interest) 영역만 정밀하게 잘라내어(Crop) 데이터셋을 정제했습니다.
 
 # ROI Crop 전처리가 반영된 데이터셋으로 학습 연동
+```python
 model_crop = YOLO("yolo11s.pt")
 model_crop.train(
     data="crop_data.yaml",  # 크롭 전용 데이터 명세
@@ -125,18 +128,21 @@ model_crop.train(
     imgsz=640, 
     name="yolo11s_roi_crop"
 )
+```
 
 5차 실험: CLAHE 국소 명암 대비 강조 적용
 아스팔트 노면과 어두운 균열(Crack) 경계선의 식별력을 극대화하기 위해, OpenCV를 활용한 국소 적응형 히스토그램 균등화(CLAHE) 알고리즘을 이미지 전반에 적용하여 대비를 극대화했습니다.
 
+```python
 import cv2
-
 # OpenCV 활용 CLAHE 이미지 가공 파이프라인 구현 샘플
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
 # (노트북 소스코드를 통해 전체 이미지를 변환 처리한 후 YOLOv11 학습 수행)
+```
 
 비디오 인퍼런스 및 실시간 추적(Tracking) 알고리즘
 
+```python
 from ultralytics import YOLO
 
 # ByteTrack 알고리즘 연동 및 실제 도로 주행 비디오 인퍼런스 추적
@@ -146,6 +152,7 @@ results = best_model.track(
     show=True, 
     tracker="bytetrack.yaml"
 )
+```
 
 ## 5. 실험 결과 및 분석 (Results & Analysis)
 본 프로젝트는 실제 도로 환경과 유사한 조건에서 각 전처리 및 학습 기법이 미치는 영향력을 평가하기 위해, 검증 데이터셋(Validation Dataset)을 기준으로 정량적 성능 메트릭을 도출하여 비교 분석을 수행하였습니다.
