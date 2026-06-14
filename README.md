@@ -66,7 +66,7 @@ C:/Users/konyang/dataset_yolo/
 
 실험별 전처리 및 학습 파이프라인
 
-1차 실험 Baseline 학습 (YOLOv11s)
+* 1차 실험 Baseline 학습 (YOLOv11s)
 기준 탐지 성능 지표를 수립하기 위해, 추가적인 화질 가공 없이 정제된 기본 데이터셋만을 활용하여 Small 모델로 가볍게 학습을 진행했습니다.
 
 ```python
@@ -82,7 +82,7 @@ model_base.train(
     name="yolo11s_baseline"
 )
 
-2차 실험 Model Upgrade (YOLOv11m)
+* 2차 실험 Model Upgrade (YOLOv11m)
 모델의 백본(Backbone) 네트워크 파라미터 체급을 확장하여, 도로 위험물의 미세 특징 추출 성능을 고도화하고자 Medium 모델로 스케일업 실험을 진행했습니다.
 
 # Model Upgrade: YOLOv11m 모델 스케일업 학습
@@ -95,7 +95,7 @@ model_mid.train(
     name="yolo11m_upgrade"
 )
 
-3차 실험: Data Augmentation 적
+* 3차 실험: Data Augmentation 적
 차량 주행 중 발생할 수 있는 노면의 물리적 각도 변화 및 기상 조건 변화를 강제로 모사하기 위해, 광학적·기하학적 증강 옵션을 부여하여 모델의 일반화 성능을 유도했습니다.
 
 # Augmentation: 조도 변화 및 흔들림 가혹 환경 모사 학습
@@ -112,7 +112,7 @@ model_aug.train(
     name="yolo11s_augmentation"
 )
 
-4차 실험: ROI Crop 전처리 처리
+* 4차 실험: ROI Crop 전처리 처리
 도로 전경 이미지에서 하늘, 가로수, 건물 등 탐지와 무관한 불필요한 상단 배경을 파이썬 스크립트로 필터링하고, 실제 결함이 존재하는 노면(Region of Interest) 영역만 정밀하게 잘라내어(Crop) 데이터셋을 정제했습니다.
 
 # ROI Crop 전처리가 반영된 데이터셋으로 학습 연동
